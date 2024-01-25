@@ -1,3 +1,4 @@
+import EventList from '@/components/events/event.list'
 import Metadata from '@/components/metadata'
 import { getFeaturedEvents } from '@/resources/static'
 
@@ -6,7 +7,7 @@ export default function Homepage() {
   return (
     <main>
       <Metadata />
-      <ul></ul>
+      <EventList items={featureEvents} />
     </main>
   )
 }
