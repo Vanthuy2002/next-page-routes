@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import classes from './css/item.module.css'
+import Button from '../button'
+import { useRouter } from 'next/router'
 
 const convertDateToHuman = (date) =>
   new Date(date).toLocaleDateString('en-US', {
@@ -12,6 +13,11 @@ const convertAddres = (location) => location.replace(', ', '\n')
 export default function EventItem({ event }) {
   const dateHumanRead = convertDateToHuman(event.date)
   const addrFomart = convertAddres(event.location)
+
+  const routes = useRouter()
+  const showDetailEvent = (link) => {
+    routes.push(link)
+  }
   return (
     <li className={classes.item}>
       <img src={event.image} alt={event.title} />
@@ -26,9 +32,9 @@ export default function EventItem({ event }) {
           </div>
         </div>
         <div className={classes.actions}>
-          <Link href={`/events/${event.id}`}>
-            <span>Details</span>
-          </Link>
+          <Button onClick={() => showDetailEvent(`/events/${event.id}`)}>
+            Details
+          </Button>
         </div>
       </div>
     </li>

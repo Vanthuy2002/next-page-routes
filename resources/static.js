@@ -22,7 +22,7 @@ const DUMMY_EVENTS = [
   },
   {
     id: 'e3',
-    title: 'Networking for extroverts',
+    title: 'A party for model Ichiko Miho',
     description:
       'You probably need no help with networking in general. But focusing your energy correctly - that is something where most people can improve.',
     location: 'My Street 12, 10115 Broke City',
