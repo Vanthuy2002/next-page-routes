@@ -1,11 +1,12 @@
 import Metadata from '@/components/metadata'
-import styles from './page.module.css'
+import { getFeaturedEvents } from '@/resources/static'
 
 export default function Homepage() {
+  const featureEvents = getFeaturedEvents()
   return (
     <main>
       <Metadata />
-      <h1>Hello World</h1>
+      <ul></ul>
     </main>
   )
 }
