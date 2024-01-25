@@ -7,8 +7,8 @@ export default function Homepage() {
     <main>
       <Metadata />
       <h1>Hello World</h1>
-      <Link className={styles.btn} href='blog/uuid-adsd-fdfd'>
-        Read More
+      <Link href='blog/uuid-adsd-fdfd'>
+        <span className={styles.btn}>See More</span>
       </Link>
     </main>
   )
