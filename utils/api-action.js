@@ -1,3 +1,5 @@
+import { convertDataToArray } from './format'
+
 const API_ENDPOINT =
   'https://learn-firebase-223d2-default-rtdb.asia-southeast1.firebasedatabase.app/events.json'
 
@@ -28,6 +30,17 @@ const getDetailEvent = async (id) => {
 
 const getFilteredEvents = async (dateFilter) => {
   const [year, month] = dateFilter
+  const allEvents = await getAllEvents()
+  const transformedEvents = convertDataToArray(allEvents)
+
+  let filteredEvents = transformedEvents.filter((event) => {
+    const eventDate = new Date(event.date)
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    )
+  })
+
+  return filteredEvents
 }
 
 export { getAllEvents, getDetailEvent, getFilteredEvents, getFeaturedEvents }
