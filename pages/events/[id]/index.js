@@ -2,16 +2,11 @@ import EventContent from '@/components/event-detail/event-content'
 import EventLogistics from '@/components/event-detail/event-logictic'
 import EventSummary from '@/components/event-detail/event-summary'
 import Metadata from '@/components/metadata'
-
-import { getEventById } from '@/resources/static'
-import { useRouter } from 'next/router'
+import { getAllEvents, getDetailEvent } from '@/utils/api-action'
+import { convertDataToArray } from '@/utils/format'
 import { Fragment } from 'react'
 
-export default function EventDetailPages() {
-  const routes = useRouter()
-  const { id } = routes.query
-  const event = getEventById(id)
-
+export default function EventDetailPages({ event }) {
   if (!event) {
     return <p>Not found events</p>
   }
@@ -31,4 +26,27 @@ export default function EventDetailPages() {
       </EventContent>
     </Fragment>
   )
+}
+
+export async function getStaticPaths() {
+  const events = await getAllEvents()
+  const transformed = convertDataToArray(events)
+  const paths = transformed.map((item) => ({ params: { id: item.id } }))
+
+  return {
+    paths,
+    fallback: false
+  }
+}
+
+export async function getStaticProps(context) {
+  const { params } = context
+  const eventId = params.id
+
+  const event = await getDetailEvent(eventId)
+  return {
+    props: {
+      event
+    }
+  }
 }

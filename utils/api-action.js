@@ -20,7 +20,9 @@ const getFeaturedEvents = async () => {
 }
 
 const getDetailEvent = async (id) => {
-  const event = await callApiAction(`${API_ENDPOINT}/${id}`)
+  const event = await callApiAction(
+    `${API_ENDPOINT.replace('.json', `/${id}.json`)}`
+  )
   return event
 }
 
