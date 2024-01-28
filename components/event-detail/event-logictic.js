@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import classes from './css/logictic.module.css'
 
 function EventLogistics(props) {
@@ -13,7 +14,7 @@ function EventLogistics(props) {
   return (
     <section className={classes.logistics}>
       <div className={classes.image}>
-        <img src={image} alt={imageAlt} />
+        <Image src={image} alt={imageAlt} width={320} height={320} />
       </div>
       <ul className={classes.list}>
         <time>{humanReadableDate}</time>

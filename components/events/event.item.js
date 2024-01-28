@@ -1,6 +1,7 @@
 import classes from './css/item.module.css'
 import Button from '../button'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 const convertDateToHuman = (date) =>
   new Date(date).toLocaleDateString('en-US', {
@@ -20,7 +21,13 @@ export default function EventItem({ event }) {
   }
   return (
     <li className={classes.item}>
-      <img src={event.image} alt={event.title} />
+      <Image
+        src={event.image}
+        alt={event.title}
+        width={250}
+        height={160}
+        priority
+      />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{event.title}</h2>
