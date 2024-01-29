@@ -1,7 +1,8 @@
 import Metadata from '@/components/metadata'
+import { getAllFeeback, postFeedback } from '@/utils/api-actions'
 import { useRef } from 'react'
 
-export default function Homepage() {
+export default function Homepage({ feedbackDt }) {
   const feedbackRef = useRef('')
   const emailRef = useRef('')
 
@@ -12,14 +13,10 @@ export default function Homepage() {
       feedback: feedbackRef.current.value
     }
 
-    await fetch('/api/feedback', {
-      method: 'POST',
-      body: payload,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const result = await postFeedback(payload)
+    console.log(result)
   }
+
   return (
     <main>
       <Metadata />
@@ -41,6 +38,28 @@ export default function Homepage() {
         </div>
         <button>Send Feedback</button>
       </form>
+
+      <ul>
+        {feedbackDt.length > 0 ? (
+          feedbackDt.map((fb) => (
+            <li key={fb.id}>
+              <p>{fb.email}</p>
+              <p>{fb.feedback}</p>
+            </li>
+          ))
+        ) : (
+          <p>No feedback to display</p>
+        )}
+      </ul>
     </main>
   )
+}
+
+export async function getServerSideProps() {
+  const data = await getAllFeeback()
+  return {
+    props: {
+      feedbackDt: data
+    }
+  }
 }

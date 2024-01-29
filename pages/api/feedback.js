@@ -1,7 +1,13 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const targetStrore = path.resolve('resources/feedback.json')
+const targetStore = path.resolve('resources/feedback.json')
+
+function getDataFromStore() {
+  const read = fs.readFileSync(targetStore, { encoding: 'utf-8' })
+  const contentInFile = JSON.parse(read)
+  return contentInFile
+}
 
 export default async function handleFeedBack(req, res) {
   if (req.method === 'POST') {
@@ -12,15 +18,22 @@ export default async function handleFeedBack(req, res) {
       email,
       feedback
     }
-
-    const read = fs.readFileSync(targetStrore, { encoding: 'utf-8' })
-    const contentInFile = JSON.parse(read)
+    const contentInFile = getDataFromStore()
     contentInFile.push(newFeedback)
 
-    fs.writeFile(targetStrore, contentInFile, {
-      encoding: 'utf-8'
-    })
-
+    fs.writeFile(
+      targetStore,
+      JSON.stringify(contentInFile),
+      {
+        encoding: 'utf-8'
+      },
+      (err) => {
+        if (err) return err.message
+      }
+    )
     res.status(201).json({ message: 'Create feedback sucessfully' })
+  } else {
+    const data = getDataFromStore()
+    res.status(200).json(data)
   }
 }
